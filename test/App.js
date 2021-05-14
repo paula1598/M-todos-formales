@@ -7,6 +7,7 @@ import SignUp from './componentss/signUp/SignUp';
 import Main from './componentss/main/Main';
 import Citas from './componentss/citas/Citas';
 import Emergencia from './componentss/emergencia/Emergencia';
+import Consultar from './componentss/consultar/Consultar';
 
 const Stack = createStackNavigator()
 export default function App() {
@@ -51,6 +52,15 @@ export default function App() {
                         headerTitleAlign: 'center',
                         
                         }}  name = "Emergencia" component= {Emergencia}/> 
+
+                 <Stack.Screen options={{
+                     headerStyle: {
+                            backgroundColor: '#EDD9D9'
+                        },
+                        headerTitleAlign: 'center',
+                        
+                        }}  name = "Consultar" component= {Consultar}/> 
+
                 </Stack.Navigator>
         </NavigationContainer>
     )

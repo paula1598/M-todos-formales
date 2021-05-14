@@ -2,13 +2,16 @@ import React, {Component} from 'react';
 import {View, Text,TouchableOpacity,ImageBackground,Image} from 'react-native';
 import Citas from '../citas/Citas';
 import styles from './styles'
-const Main=  ({navigation})  => {
+const Main=  ({navigation},user)  => {
     const citass = () => {
         navigation.navigate('Citas')   
     }
     const emergenciapagina = () => {
       navigation.navigate('Emergencia')   
   }
+  const consultarpagina = () => {
+    navigation.navigate('Consultar')   
+}
     return (
         <ImageBackground source={require ('./Imagenes/fondo.png')} style={styles.container}>
            
@@ -28,7 +31,7 @@ const Main=  ({navigation})  => {
               
             </ TouchableOpacity>  
            
-            < TouchableOpacity style= {styles.button } >
+            < TouchableOpacity style= {styles.button }  onPress ={consultarpagina}>
                <Image 
                style={styles.image1}
                source={require('./Imagenes/SoliInfo.png')}

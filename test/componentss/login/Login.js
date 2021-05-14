@@ -11,12 +11,13 @@ const Login = ({navigation}) => {
 
             const onPressLogin = async () => {
               try {
+                
              //await firebaseService.login(user, pass)                 //valida con el servidor si el Email y la contraseñas son correctas
              navigation.navigate('CECVACUNAAP')   
                 setUser("")  
                 setPass("")
               } catch (e) {                                             // si el usuario no esta registardo o puso mal la informacion saldra una alerta para el usuario
-                alert("Email o password incorrect")                     
+                alert(e)                     
               }
             }
 

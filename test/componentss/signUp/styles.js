@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   container: {                                              //Contenedor principal
     flex : 1, 
-    justifyContent: 'center',
+    alignItems:'center'
     
   },
   inputText: {    
@@ -13,27 +13,26 @@ const styles = StyleSheet.create({
   
   },
   button: {                                              // botones 
-    height:60,
-    width:350,
-    marginHorizontal:30,
-    marginVertical:-20,
+      
+    width:300,
+    height:50,
+    backgroundColor:'#dfe4ea',
     justifyContent:'center',
+    alignItems:'center',
     borderRadius: 35,
-    marginTop:40,
-    
-  },
+    marginTop:60,
+    borderWidth: 1,
+    borderColor:'black',
+  
+  
+},
   textButton: {   
     fontWeight:'bold',                                        // texto de los botones
     textAlign: 'center',
     fontSize: 20,
     
   },
-  loginButton :{                                               //color especifico del boton login
-    backgroundColor:'#dfe4ea'
-  },
-  signUpButton: {                                               //color especifico del boton registrarse 
-    backgroundColor: '#dfe4ea'
-  },
+  
     iconoEmailPas:{
     color:'#000',
     fontSize:20,
@@ -41,6 +40,7 @@ const styles = StyleSheet.create({
     paddingHorizontal:5,
   },
   containesPasswor: {
+    width:350,
     flexDirection: 'row',
     backgroundColor:'#a4b0be',
    justifyContent:'center',
