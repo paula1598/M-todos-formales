@@ -1,60 +1,92 @@
 import React, {useState} from 'react';
-import {View, Text,TouchableOpacity,TextInput,ImageBackground,Alert} from 'react-native';
+import {View, Text,TouchableOpacity,TextInput,ImageBackground,Alert,Image,} from 'react-native';
 import styles from './styles'
-import firebaseService from '../../services/firebase';
+
 import {Picker} from '@react-native-picker/picker';
+import { floor } from 'react-native-reanimated';
+
 const Citas =  ({navigation})  => {
-
-     const [lugarV, setLugarV] = useState('bogota')
-     const [tipVacu, setTipVacu] = useState('hogar')
-     const [pickerValue, setPikerValue] = useState("PrimeraDosis")
-
-     const enviar = async () => {
-          Alert.alert('','Su solisitud estan en proceso, para saber mas informacion porfavor dirijase al CONSULTAR CITA')
+  const [data, setData] = useState('');
+  const url='http://192.168.68.103:8080/Servidor/webresources/entity.usuario/'
+    const casa = async () => {
+        try {
+          fetch(url+global.usuarios,{   
+            method:'GET',
+            headers: {
+              'Content-Type': 'application/json'
+            }})
+             .then((response) =>response.json())
+             .then((responseJson) => {
+              let ahora =new Date();
+              let fechaNa= new Date(responseJson.fechanacimiento)
+              let anos= ahora.getFullYear()-fechaNa.getFullYear();
+              if (ahora.getMonth() < fechaNa.getMonth()) {
+                --anos;
+              }
+              global.anos=anos;
+              if (global.anon > 80) {
+                global.Etapa="1 Etapa"
+           }else{
+                if (global.anon > 60 && global.anon < 79) {
+                  global.Etapa="2 Etapa"  
+                }else{
+                     if (global.anon > 50 && global.anon < 59) {
+                      global.Etapa="3 Etapa"  
+                     }else{
+                          if (global.anon > 40 && global.anon < 49) {
+                            global.Etapa="4 Etapa"
+                          }else{
+                            global.Etapa="5 Etapa"
+                          }
+                     }
+                }
+           }
+                 //console.log(global.anos) 
+             })
+             .catch((e)=>{
+              // console.log(e)                                 // Nos muestra el error en consola 
+               alert("Usuario o contraseña invalido  ") // saldra un aviso si la comunicacion con el servidor fallo 
+             })
           
-          navigation.navigate('CECVACUNAAP')  
-}
+
+         navigation.navigate('Casa')   
+        } catch (e) {                                             // si el usuario no esta registardo o puso mal la informacion saldra una alerta para el usuario
+          alert(e)                     
+        }
+    }
+
+      const SitiosAutorizados = async () => {
+        try {
+       navigation.navigate('SitiosAutorizados')   
+        } catch (e) {                                             // si el usuario no esta registardo o puso mal la informacion saldra una alerta para el usuario
+          alert(e)                     
+        }
+      }
+    console.log(global.usuarios)
+    
     return (
      <ImageBackground source={require ('./Imagenes/fondo.png')} style={styles.container}>
-    
-       
-     <Text style={styles.TextoCon}>Dosis de vacunacion</Text>
-     <View style={styles.containerslect}>
-          <Picker style={styles.picker} selectedValue={pickerValue} onValueChange={(itemValue,itemIndex)=> setPikerValue(itemValue)}>
-               <Picker.Item label ="Primera Dosis" value="PrimeraDosis"/>
-               <Picker.Item label ="Segunda Dosis" value="SegundaDosis"/>
-         
-         
-          </Picker>
-          
-     </View>
+    <Text>{global.usuarios}</Text>
+    <Text style={styles.Texto}></Text>
 
-     <Text style={styles.TextoCon}>Lugar</Text>
-     <View style={styles.containerslect}>
-          <Picker style={styles.picker} selectedValue={lugarV} onValueChange={(itemValue)=> setLugarV(itemValue)}>
-               <Picker.Item label ="Bogota" value="bogota"/>
-               <Picker.Item label ="Pereira" value="pereira"/>
-               <Picker.Item label ="Cali" value="cali"/>
-               <Picker.Item label ="Medellin" value="medellin"/>
-              
-         
-          </Picker>
-     </View>
+                <Image 
+                    style={styles.image2}
+                    source={require('./Imagenes/1.png')}
+                    />
+               < TouchableOpacity style= {styles.button }  onPress ={casa} >
+                    <Text style={styles.TituloTex}>Casa</Text>
+                    <Text  style={[styles.Texto,{ marginLeft:-30}]}>Puedes agendar tu Cita para la vacuna conta el COVID-19</Text>
+              </ TouchableOpacity>  
+             
+               < TouchableOpacity style= {styles.button } onPress ={SitiosAutorizados}>
+                    <Text style={styles.TituloTex}>Cita en sitios autorizados</Text>
+                    <Text  style={[styles.Texto,{ marginLeft:-220}]}>Puedes agendar tu Cita para la vacuna conta el COVID-19</Text>
+              </ TouchableOpacity>  
 
-     <Text style={styles.TextoCon}>Tipo de vacunacion</Text>
-     
-     <View style={styles.containerslect}>
-          <Picker style={styles.picker} selectedValue={tipVacu} onValueChange={(itemValue)=> setTipVacu(itemValue)}>
-               <Picker.Item label ="Hogar" value="hogar"/>
-               <Picker.Item label ="Sitios autorizados" value="SitiosAutorizados "/>
-         
-          </Picker>
-     </View>
-    
-        < TouchableOpacity style= {styles.containerBoton } onPress ={ enviar} >
-               <Text style={styles.Textoboton}>Enviar</Text>
-            </ TouchableOpacity>  
-        
+              <Image 
+                    style={[styles.image2,{marginTop:60}]}
+                    source={require('./Imagenes/1.png')}
+                    />
     </ImageBackground>
     ) ;
   

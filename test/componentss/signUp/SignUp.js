@@ -3,6 +3,7 @@ import {View, Text, TextInput, ImageBackground, Image, TouchableOpacity,ScrollVi
 import styles from './styles'
 import Icon from 'react-native-ionicons'
 
+
 const SignUp = ({navigation}) => { 
   const [cedula, setCedula] = useState('')                      //IDCEDULA BASE DE DATOS
   const [nombre, setNombre] = useState('')                      //NOMBRE BASE DE DATOS
@@ -11,48 +12,65 @@ const SignUp = ({navigation}) => {
   const [email, setEmail] = useState('')                        //EMAIL BASE DE DATOS
   const [pass, setPass] = useState('')                          //PASSWORD BASE DE DATOS
   const [telefono, setTelefono] = useState('')                  //TELEFONO BASE DE DATOS
-
+  
   const url='http://192.168.68.103:8080/Servidor/webresources/entity.usuario/'    // URL REST BASE DE DATOS
 
   //Crear usuario con peticion rest 
   //las variables que el sistema pide son 
   // cedula, nombre, apellido, fecha de nacimiento, telefono, email, password
             const createUser = async () => {
-              fetch(url, {
-                method: 'POST',
-                headers: {
-                  Accept: 'application/json',
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                  idcedula:cedula,
-                  nombre:nombre,
-                  apellido:apellido,
-                  fechanacimiento:fNacimiento,
-                  email:email,
-                  password:pass
+              if (cedula !="" && nombre !="" && apellido !="" && fNacimiento !="" && email !="" && pass !="" && telefono !="" ) {
+                fetch(url+cedula)
+              .then((response) => response.json())
+              .then((json) =>{
+                alert("error 400")
+                navigation.navigate('Log')}
+                )
+              .catch ((e)=>{
+                fetch(url, {
+                  method: 'POST',
+                  headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({
+                    idcedula:cedula,
+                    nombre:nombre,
+                    apellido:apellido,
+                    fechanacimiento:fNacimiento,
+                    email:email,
+                    password:pass
+                  })
                 })
-              });
+                alert("Se ha registrado correctamente")
+                navigation.navigate('Log') 
+                ;
+              })
+              }else{
+                alert("Porfavor rellene la infromacion solicitada")
+              }
+              
             }
 
 
     return (
    <ImageBackground source={require ('../login/Fondos/6.png')} style={styles.container}>
-     {/* Funcionamiento para crear el usuario, la base de datos solicita unos datos especificos 
-     -cedula
-     -nombre
-     -apellido
-     -fecha de nacimiento
-     -telefono
-     -password
-      */}
+           {/* Funcionamiento para crear el usuario, la base de datos solicita unos datos especificos 
+                -cedula
+                -nombre
+                -apellido
+                -fecha de nacimiento
+                -telefono
+                -password
+                  */}
+                  
       <ScrollView >
      
        <View style={styles.container}>
 
                  {/* CEDULA */}
                   <View style= {styles.containesPasswor}>
-                     <Icon name="finger-print" style={styles.iconoEmailPas} />        {/*ICONO DEL INPUT */}
+                     <Icon name="finger-print" style={styles.iconoEmailPas} />        
                           <TextInput                                                  //INPUT
                           placeholder= "Cedula"                                       //NOMBRE DEL INPUT EN PANTALLA
                           style= {styles.inputText}                                   //ESTILO DEL INPUT
@@ -63,7 +81,7 @@ const SignUp = ({navigation}) => {
 
                  {/* NOMBRE */}
                  <View style= {styles.containesPasswor}>
-                      <Icon name="person" style={styles.iconoEmailPas} />             {/*ICONO DEL INPUT */}
+                      <Icon name="person" style={styles.iconoEmailPas} />             
                           <TextInput                                                  //INPUT
                             placeholder= "nombre"                                     //NOMBRE DEL INPUT EN PANTALLA                            
                             style= {styles.inputText}                                 //ESTILO DEL INPUT
@@ -74,7 +92,7 @@ const SignUp = ({navigation}) => {
 
                  {/* APELLIDO */}
                   <View style= {styles.containesPasswor}>
-                     <Icon name="person" style={styles.iconoEmailPas} />              {/*ICONO DEL INPUT */}
+                     <Icon name="person" style={styles.iconoEmailPas} />              
                           <TextInput                                                  //INPUT
                           placeholder= "Apellido"                                     //NOMBRE DEL INPUT EN PANTALLA   
                           style= {styles.inputText}                                   //ESTILO DEL INPUT
@@ -85,7 +103,7 @@ const SignUp = ({navigation}) => {
 
                  {/* TELEFONO */}
                  <View style= {styles.containesPasswor}>
-                     <Icon name="call" style={styles.iconoEmailPas} />                {/*ICONO DEL INPUT */}
+                     <Icon name="call" style={styles.iconoEmailPas} />               
                           <TextInput                                                  //INPUT
                           placeholder= "Telefono"                                     //NOMBRE DEL INPUT EN PANTALLA   
                           style= {styles.inputText}                                   //ESTILO DEL INPUT
@@ -96,7 +114,7 @@ const SignUp = ({navigation}) => {
 
                  {/* FECHA DE NACIMIENTO */}
                  <View style= {styles.containesPasswor}>
-                      <Icon name="calendar" style={styles.iconoEmailPas} />           {/*ICONO DEL INPUT */}
+                      <Icon name="calendar" style={styles.iconoEmailPas} />          
                           <TextInput                                                  //INPUT
                           placeholder= "Fecha de nacimiento AAAA-MM-DD"               //NOMBRE DEL INPUT EN PANTALLA  
                           style= {styles.inputText}                                   //ESTILO DEL INPUT
@@ -107,7 +125,7 @@ const SignUp = ({navigation}) => {
 
                  {/* EMAIL */}
                  <View style= {styles.containesPasswor}>
-                      <Icon name="mail" style={styles.iconoEmailPas} />               {/*ICONO DEL INPUT */}
+                      <Icon name="mail" style={styles.iconoEmailPas} />               
                           <TextInput                                                  //INPUT
                           placeholder= "Email"                                        //NOMBRE DEL INPUT EN PANTALLA 
                           style= {styles.inputText}                                   //ESTILO DEL INPUT
@@ -118,7 +136,7 @@ const SignUp = ({navigation}) => {
 
                  {/* PASSWORD */}
                  <View style= {styles.containesPasswor}>
-                      <Icon name="lock" style={styles.iconoEmailPas} />               {/*ICONO DEL INPUT */}
+                      <Icon name="lock" style={styles.iconoEmailPas} />               
                           <TextInput secureTextEntry={true}                           //INPUT
                           placeholder= "password"                                     //NOMBRE DEL INPUT EN PANTALLA 
                           style= {styles.inputText}                                   //ESTILO DEL INPUT
@@ -128,8 +146,8 @@ const SignUp = ({navigation}) => {
                  </View>
 
 
-            < TouchableOpacity style= {styles.button } onPress ={createUser} >        {/* BOTON, EL ESTILO Y LA ACCION */}
-                   <Text style={styles.textButton}>Create new user</Text>             {/* NOMBRE DEL BOTON */}
+            < TouchableOpacity style= {styles.button } onPress ={createUser} >        
+                   <Text style={styles.textButton}>Create new user</Text>            
             </ TouchableOpacity>  
 
         </View>

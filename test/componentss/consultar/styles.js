@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:'center',
         borderRadius: 35,
-        marginTop:1,
+        marginTop:15,
         borderWidth: 1,
         borderColor:'black',
       
@@ -41,10 +41,11 @@ const styles = StyleSheet.create({
       backgroundColor: 'white',
       borderRadius: 35,                                    //barras para recibir datos solicitados
       paddingHorizontal:15,
+      alignItems: 'center',
     
     }, 
     inputInformacion: {    
-      width:280,
+      width:270,
       fontSize:15,                                //barras para recibir datos solicitados
       marginTop:-10,
       marginVertical:-10,
@@ -59,6 +60,12 @@ const styles = StyleSheet.create({
       fontSize:18,
       marginVertical:5,
       fontWeight:'bold'
+    },
+    Textoboton:{
+      justifyContent:'center',
+      alignItems:'center',
+      fontSize:15,
+    
     }
 
 });

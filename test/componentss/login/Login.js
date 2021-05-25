@@ -1,25 +1,59 @@
 import React, {useState} from 'react';
 import {View, Text, TextInput, ImageBackground, Image, TouchableOpacity} from 'react-native';
-import {firebaseService} from '../../services/firebase';
+
 import styles from './styles'
 import Icon from 'react-native-ionicons'
+import Citas from '../citas/Citas'
 
 const Login = ({navigation}) => { 
-
+ 
   const [user, setUser] = useState('')
   const [pass, setPass] = useState('')
 
-            const onPressLogin = async () => {
-              try {
-                
-             //await firebaseService.login(user, pass)                 //valida con el servidor si el Email y la contraseñas son correctas
-             navigation.navigate('CECVACUNAAP')   
-                setUser("")  
-                setPass("")
-              } catch (e) {                                             // si el usuario no esta registardo o puso mal la informacion saldra una alerta para el usuario
-                alert(e)                     
-              }
+
+  const [data, setData] = useState('');  // tiene la informacion de la base de datos solicitada 
+ 
+  const url='http://192.168.68.103:8080/Servidor/webresources/entity.usuario/' // es la URL principal para hacer la busqueda de la cita , solo falta agregarle el user a consultar 
+
+  const ConsultaUsuario = async () => {
+    {/* El if es para determinar si el usuario esta digitando la CEDULA par hacer la peticion al servidor, de esta manera evitamos sobrecarga
+   el servidor si el usuario no digito nada en el campo  */}
+    if (user !=  "") {
+     {
+       const response = await fetch(url+user,{   
+       method:'GET',
+       headers: {
+         'Content-Type': 'application/json'
+       }})
+        .then((response) =>response.json())
+        .then((responseJson) => {
+            setData(responseJson)
+           // console.log(responseJson) 
+            if (responseJson.idcedula == user && responseJson.password == pass ) {
+              navigation.navigate('CECVACUNAAP')  
+              
+              global.usuarios=user;
+              setPass("")
+              setUser("")
+               
+            }else{
+              alert("Usuario o contraseña invalido ")
             }
+          // console.log(responseJson) 
+        })
+        .catch((e)=>{
+         // console.log(e)                                 // Nos muestra el error en consola 
+          alert("Usuario o contraseña invalido  ") // saldra un aviso si la comunicacion con el servidor fallo 
+        })
+       
+     }
+    } else {
+      alert("favor rellenar los campos solicitados")  // avisa al usuario de que digite su CEDULA en el campo para poder realizar la busqueda 
+      
+    }
+   
+    
+  }
 
             const onPressCreate = () => {
                 navigation.navigate('SignUp')   
@@ -68,7 +102,7 @@ const Login = ({navigation}) => {
 
          
              {/* Con esto hacemos que los botones que creamos se puedan pulsar */}
-            <TouchableOpacity style= {[styles.button , styles.loginButton]} onPress ={onPressLogin}>
+            <TouchableOpacity style= {[styles.button , styles.loginButton]} onPress ={ConsultaUsuario}>
               <Text style={styles.textButton}>Login</Text>
             {/* //<Icon name="log-out" style={styles.icono} /> */}
             </TouchableOpacity>

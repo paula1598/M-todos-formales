@@ -6,7 +6,13 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       
     }, 
-
+    inputText: {  
+      flex:1,
+      backgroundColor: 'white',
+      borderRadius: 35,                                    //barras para recibir datos solicitados
+      paddingHorizontal:15,
+    
+    },
     containerBoton: {
       width:300,
       height:50,
@@ -19,10 +25,10 @@ const styles = StyleSheet.create({
       borderColor:'black',
     },
     TextoCon:{
-      justifyContent:'center',
-      alignItems:'center',
-      marginTop:20,
-      fontSize:20,
+      //justifyContent:'center',
+      alignItems:'flex-end',
+      marginTop:10,
+      fontSize:18,
       marginVertical:15,
       fontWeight:'bold'
     },
@@ -44,27 +50,15 @@ const styles = StyleSheet.create({
     Textoboton:{
       justifyContent:'center',
       alignItems:'center',
-      fontSize:25,
+      fontSize:19,
       fontWeight:'bold'
-      
     },
-
-    textAreaContainer: {
-      marginTop:50,
+     image2:{
       width:300,
-      borderColor:'white',
-      borderRadius: 35,
-      backgroundColor:'#dfe4ea',
-      borderWidth: 1,
-      padding: 5
-    },
-    textArea: {
+      height:5,
+      marginTop:1,
       
-      color:'black',
-      height: 150,
-      justifyContent: "flex-start"
     }
-   
 
 });
 export default styles

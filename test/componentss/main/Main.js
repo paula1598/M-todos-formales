@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {View, Text,TouchableOpacity,ImageBackground,Image} from 'react-native';
-import Citas from '../citas/Citas';
+
 import styles from './styles'
+
 const Main=  ({navigation},user)  => {
     const citass = () => {
         navigation.navigate('Citas')   
