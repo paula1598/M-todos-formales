@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
       alignItems:'center',
       borderRadius: 35,
       marginHorizontal:20,
-      marginTop:20
+      marginTop:20asdasdasdasdasdasdasdasd
     }
    
 });
